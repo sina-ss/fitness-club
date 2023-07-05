@@ -9,7 +9,6 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
-
 </head>
 
 <body class="h-100">
@@ -21,21 +20,21 @@
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
-                                    <h4 class="text-center mb-4">Sign in your account</h4>
+                                    <h4 class="text-center mb-4">Sign in to your account</h4>
                                     <form id="login-form" onsubmit="submitLoginForm(event)">
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Username</strong></label>
-                                            <input type="text" class="form-control" id="username" placeholder="sina-ss">
+                                            <input type="text" class="form-control" id="username" placeholder="Enter your username" required>
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" id="password" placeholder="password">
+                                            <input type="password" class="form-control" id="password" placeholder="Enter your password" required>
                                         </div>
                                         <div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
                                                <div class="custom-control custom-checkbox ml-1">
-													<input type="checkbox" class="custom-control-input" id="rememberPreference">
-													<label class="custom-control-label" for="rememberPreference">Remember my preference</label>
+													<input type="checkbox" class="custom-control-input" id="rememberMeCheckbox">
+													<label class="custom-control-label" for="rememberMeCheckbox">Remember my preference</label>
 												</div>
                                             </div>
                                             <div class="form-group">
@@ -43,13 +42,13 @@
                                             </div>
                                         </div>
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block">Sign Me In</button>
+                                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
                                         <p>Don't have an account? <a class="text-primary" href="./register.html">Sign up</a></p>
                                     </div>
-                                    <div id="error-message" class="text-center mt-3"></div>
+                                    <div id="error-message" class="text-center text-danger mt-3"></div>
                                 </div>
                             </div>
                         </div>
@@ -58,7 +57,6 @@
             </div>
         </div>
     </div>
-
 
     <!--**********************************
         Scripts
@@ -69,21 +67,22 @@
     <script src="./js/custom.min.js"></script>
     <script src="./js/deznav-init.js"></script>
 
+    <!-- Custom script -->
     <script>
         async function submitLoginForm(event) {
             event.preventDefault();
 
             const username = document.getElementById("username").value;
             const password = document.getElementById("password").value;
-            const rememberPreference = document.getElementById("rememberPreference").checked;
+            const rememberMe = document.getElementById("rememberMeCheckbox").checked;
 
             const loginData = {
-                username,
-                password
+                username: username,
+                password: password
             };
 
             try {
-                const response = await fetch("localhost:3000/users/login", {
+                const response = await fetch("http://localhost:3000/users/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
@@ -91,23 +90,34 @@
                     body: JSON.stringify(loginData)
                 });
 
-                const data = await response.json();
-
                 if (response.ok) {
-                    // Login successful, redirect or perform any desired action
-                    console.log("Login successful");
+                    // Login successful
+                    const user = await response.json();
+                    console.log(user); // Do something with the user data
+                    // Save user data to local storage
+                    localStorage.setItem("user", JSON.stringify(user));
+                    // Redirect to appropriate page based on user role
+                    if (user.role === "member") {
+                        window.location.href = "./member-panel.html";
+                    } else if (user.role === "trainer") {
+                        window.location.href = "./trainer-panel.html";
+                    } else if (user.role === "admin") {
+                        window.location.href = "./admin-panel.html";
+                    } else {
+                        console.error("Invalid user role:", user.role);
+                    }
                 } else {
-                    // Login failed, display error message
-                    const errorMessage = data.error || "Invalid username or password";
-                    document.getElementById("error-message").textContent = errorMessage;
+                    // Login failed
+                    const errorData = await response.json();
+                    console.log(errorData.error); // Log the error message
+                                       const errorMessage = document.getElementById("error-message");
+                    errorMessage.textContent = errorData.error;
                 }
             } catch (error) {
-                console.error("Login failed", error);
-                document.getElementById("error-message").textContent = "Failed to connect to the server";
+                console.error(error);
             }
         }
     </script>
-
 </body>
 
 </html>

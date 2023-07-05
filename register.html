@@ -45,8 +45,9 @@
                                             <label class="mb-1"><strong>Role</strong></label>
                                             <select class="form-control" id="role">
                                                 <option value="" selected disabled>Select Role</option>
-                                                <option value="Member">Member</option>
-                                                <option value="Trainer">Trainer</option>
+                                                <option value="member">Member</option>
+                                                <option value="trainer">Trainer</option>
+                                                <option value="admin">Admin</option>
                                             </select>
                                         </div>
                                         <div class="text-center mt-4">
@@ -54,7 +55,7 @@
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p>Already have an account? <a class="text-primary" href="page-login.html">Sign
+                                        <p>Already have an account? <a class="text-primary" href="login.html">Sign
                                                 in</a></p>
                                     </div>
                                 </div>
@@ -107,7 +108,7 @@
 
                     if (response.ok) {
                         alert('User registered successfully');
-                        // Redirect to login page or perform any other actions
+                        window.location.href = 'login.html';
                     } else {
                         const errorData = await response.json();
                         alert(`Error: ${errorData.errorMessage}`);
