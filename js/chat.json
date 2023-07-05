@@ -1,0 +1,23 @@
+[
+    {
+        "Id": "chat1",
+        "SenderUsername": "Trainer1",
+        "ReceiverUsername": "Member1",
+        "Date": "2023-07-06T09:30:00Z",
+        "Text": "Hello, how can I assist you?"
+    },
+    {
+        "Id": "chat2",
+        "SenderUsername": "Member1",
+        "ReceiverUsername": "Trainer1",
+        "Date": "2023-07-06T09:35:00Z",
+        "Text": "I have a question about the training schedule."
+    },
+    {
+        "Id": "chat3",
+        "SenderUsername": "Trainer2",
+        "ReceiverUsername": "Member1",
+        "Date": "2023-07-06T10:15:00Z",
+        "Text": "Good morning! Are you ready for today's session?"
+    }
+]

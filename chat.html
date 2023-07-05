@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Chat Page</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sina Sepahvand Club</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css" />
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
+    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet" />
+    <link href="./vendor/owl-carousel/owl.carousel.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/chat.css" />
+    <link href="./css/style.css" rel="stylesheet" />
+    <style>
+        /* Custom CSS styles */
+        .container {
+            margin-top: 50px;
+        }
+
+        .chat-item {
+            cursor: pointer;
+        }
+
+        .accordion-button {
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Chat Page</h1>
+
+        <!-- Chat List Section -->
+        <h2>Chat List</h2>
+        <div id="chat-list"></div>
+
+        <!-- Chat History Section -->
+        <h2>Chat History</h2>
+        <div id="chat-history" class="accordion"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/chat.js"></script>
+</body>
+
+</html>
