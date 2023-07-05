@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <title>Sina Sepahvand Club</title>
     <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
     <link href="./css/style.css" rel="stylesheet">
@@ -20,36 +21,33 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Sign up your account</h4>
-                                    <form action="page-login.html">
+                                    <form id="register-form">
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Username</strong></label>
-                                            <input type="text" class="form-control" placeholder="username">
+                                            <input type="text" class="form-control" placeholder="username"
+                                                id="username">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Name</strong></label>
-                                            <input type="email" class="form-control" placeholder="sina-ss">
+                                            <input type="text" class="form-control" placeholder="Name" id="name">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Family Name</strong></label>
-                                            <input type="email" class="form-control" placeholder="sina-ss">
+                                            <input type="text" class="form-control" placeholder="Family Name"
+                                                id="family-name">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Password</strong></label>
-                                            <input type="password" class="form-control" value="Password">
+                                            <input type="password" class="form-control" placeholder="Password"
+                                                id="password">
                                         </div>
                                         <div class="form-group">
                                             <label class="mb-1"><strong>Role</strong></label>
-                                            <div class="dropdown">
-                                                <button class="btn btn-secondary dropdown-toggle" type="button"
-                                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    Select Role
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <a class="dropdown-item" href="#" data-value="Member">Member</a>
-                                                    <a class="dropdown-item" href="#" data-value="Trainer">Trainer</a>
-                                                </div>
-                                            </div>
+                                            <select class="form-control" id="role">
+                                                <option value="" selected disabled>Select Role</option>
+                                                <option value="Member">Member</option>
+                                                <option value="Trainer">Trainer</option>
+                                            </select>
                                         </div>
                                         <div class="text-center mt-4">
                                             <button type="submit" class="btn btn-primary btn-block">Sign me up</button>
@@ -72,10 +70,58 @@
 	Scripts
 ***********************************-->
     <!-- Required vendors -->
-    <script src="./vendor/global/global.min.js"></script>
+    <!-- Required vendors -->
+    <script src="./vendor/jquery/jquery.min.js"></script>
+    <script src="./vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <script src="./vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="./js/custom.min.js"></script>
-    <script src="./js/deznav-init.js"></script>
+
+
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const name = document.getElementById('name').value;
+            const familyName = document.getElementById('family-name').value;
+            const role = document.getElementById('role').value;
+
+            if (role) {
+                const data = {
+                    username,
+                    password,
+                    name,
+                    familyName,
+                    role
+                };
+
+                try {
+                    const response = await fetch('http://localhost:3000/users/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (response.ok) {
+                        alert('User registered successfully');
+                        // Redirect to login page or perform any other actions
+                    } else {
+                        const errorData = await response.json();
+                        alert(`Error: ${errorData.errorMessage}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('Failed to register user');
+                }
+            } else {
+                alert('Please select a role');
+            }
+        });
+
+    </script>
 
 </body>
 

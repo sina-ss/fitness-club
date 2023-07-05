@@ -8,10 +8,12 @@ const courses = require('./courses');
 const registeredcourses = require('./registeredcourses');
 const { Sequelize, DataTypes } = require('sequelize');
 const User = require('./Model/users-model');
+const cors = require('cors'); // Import the cors module
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors()); // Enable CORS for all routes
 app.use('/users', users);
 app.use('/courses', courses);
 app.use('/registeredcourses', registeredcourses);
