@@ -1,0 +1,21 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+h1,
+h2 {
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+}

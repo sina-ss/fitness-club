@@ -1,0 +1,22 @@
+[
+    {
+        "id": "course1",
+        "name": "Yoga Class",
+        "price": "$50"
+    },
+    {
+        "id": "course2",
+        "name": "Pilates Workshop",
+        "price": "$75"
+    },
+    {
+        "id": "course3",
+        "name": "Zumba Dance",
+        "price": "$60"
+    },
+    {
+        "id": "course4",
+        "name": "Strength Training",
+        "price": "$70"
+    }
+]

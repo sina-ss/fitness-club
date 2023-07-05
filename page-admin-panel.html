@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Sina Sepahvand Club</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png">
+    <link href="./css/style.css" rel="stylesheet">
+    <link href="./css/admin.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Admin Panel</h1>
+
+        <!-- Member Management Section -->
+        <h2>Member Management</h2>
+        <table id="members-table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Trainer Management Section -->
+        <h2>Trainer Management</h2>
+        <table id="trainers-table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <!-- Member Data Modification Section -->
+        <h2>Member Data Modification</h2>
+        <form id="member-form">
+            <div class="mb-3">
+                <label for="member-username">Username</label>
+                <input type="text" class="form-control" id="member-username" required>
+            </div>
+            <div class="mb-3">
+                <label for="member-name">Name</label>
+                <input type="text" class="form-control" id="member-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="member-family-name">Family Name</label>
+                <input type="text" class="form-control" id="member-family-name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Member</button>
+        </form>
+
+        <!-- Shift Trainers Modification Section -->
+        <h2>Shift Trainers Modification</h2>
+        <form id="trainer-form">
+            <div class="mb-3">
+                <label for="trainer-username">Username</label>
+                <input type="text" class="form-control" id="trainer-username" required>
+            </div>
+            <div class="mb-3">
+                <label for="trainer-name">Name</label>
+                <input type="text" class="form-control" id="trainer-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="trainer-family-name">Family Name</label>
+                <input type="text" class="form-control" id="trainer-family-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="trainer-shift">Shift</label>
+                <input type="text" class="form-control" id="trainer-shift" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update Trainer Shift</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./js/admin.js"></script>
+</body>
+
+</html>
