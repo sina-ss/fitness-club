@@ -20,67 +20,75 @@
 
 <body>
     <div class="container">
-        <h1>Admin Panel</h1>
+        <h1 class="text-center mt-5">Admin Panel</h1>
 
         <!-- Member Management Section -->
-        <h2>Member Management</h2>
-        <table id="members-table" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <h2 class="mt-5">Member Management</h2>
+        <div class="table-responsive">
+            <table id="members-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
         <!-- Trainer Management Section -->
-        <h2>Trainer Management</h2>
-        <table id="trainers-table" class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Username</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
+        <h2 class="mt-5">Trainer Management</h2>
+        <div class="table-responsive">
+            <table id="trainers-table" class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
 
         <!-- Member Data Modification Section -->
-        <h2>Member Data Modification</h2>
+        <h2 class="mt-5">Member Data Modification</h2>
         <form id="member-form">
-            <div class="mb-3">
-                <label for="member-username">Username</label>
-                <input type="text" class="form-control" id="member-username" required>
-            </div>
-            <div class="mb-3">
-                <label for="member-name">Name</label>
-                <input type="text" class="form-control" id="member-name" required>
-            </div>
-            <div class="mb-3">
-                <label for="member-family-name">Family Name</label>
-                <input type="text" class="form-control" id="member-family-name" required>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="member-username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="member-username" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="member-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="member-name" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="member-family-name" class="form-label">Family Name</label>
+                    <input type="text" class="form-control" id="member-family-name" required>
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Update Member</button>
         </form>
 
         <!-- Shift Trainers Modification Section -->
-        <h2>Shift Trainers Modification</h2>
+        <h2 class="mt-5">Shift Trainers Modification</h2>
         <form id="trainer-form">
-            <div class="mb-3">
-                <label for="trainer-username">Username</label>
-                <input type="text" class="form-control" id="trainer-username" required>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="trainer-username" class="form-label">Username</label>
+                    <input type="text" class="form-control" id="trainer-username" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="trainer-name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="trainer-name" required>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label for="trainer-family-name" class="form-label">Family Name</label>
+                    <input type="text" class="form-control" id="trainer-family-name" required>
+                </div>
             </div>
             <div class="mb-3">
-                <label for="trainer-name">Name</label>
-                <input type="text" class="form-control" id="trainer-name" required>
-            </div>
-            <div class="mb-3">
-                <label for="trainer-family-name">Family Name</label>
-                <input type="text" class="form-control" id="trainer-family-name" required>
-            </div>
-            <div class="mb-3">
-                <label for="trainer-shift">Shift</label>
+                <label for="trainer-shift" class="form-label">Shift</label>
                 <input type="text" class="form-control" id="trainer-shift" required>
             </div>
             <button type="submit" class="btn btn-primary">Update Trainer Shift</button>

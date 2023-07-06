@@ -6,17 +6,18 @@ const cookieParser = require('cookie-parser');
 const users = require('./users');
 const courses = require('./courses');
 const registeredcourses = require('./registeredcourses');
-const { Sequelize, DataTypes } = require('sequelize');
+const messages = require('./messages');
 const User = require('./Model/users-model');
-const cors = require('cors'); // Import the cors module
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use('/users', users);
 app.use('/courses', courses);
 app.use('/registeredcourses', registeredcourses);
+app.use('/messages', messages);
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
