@@ -2,50 +2,260 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat Page</title>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Sina Sepahvand Club</title>
-    <link rel="icon" type="image/png" sizes="16x16" href="./images/favicon.png" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./vendor/chartist/css/chartist.min.css" />
-    <link href="./vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
-    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet" />
-    <link href="./vendor/owl-carousel/owl.carousel.css" rel="stylesheet" />
-    <link rel="stylesheet" href="./css/chat.css" />
-    <link href="./css/style.css" rel="stylesheet" />
     <style>
-        /* Custom CSS styles */
-        .container {
-            margin-top: 50px;
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            margin: 0;
+            padding: 0;
         }
 
-        .chat-item {
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 90px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+            z-index: 1;
+        }
+
+        .dropdown:hover {
             cursor: pointer;
         }
 
-        .accordion-button {
-            background-color: #f8f9fa;
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: scroll;
+            padding: 10px;
+        }
+
+        .chat-message {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .chat-message img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .chat-message .message {
+            background-color: #fff;
+            color: #333;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .chat-message .time {
+            font-size: 12px;
+            color: #999;
+            margin-left: 10px;
+        }
+
+        .chat-input {
+            display: flex;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-input input[type="text"] {
+            flex: 1;
+            height: 40px;
+            border: none;
+            background-color: #f2f2f2;
+            padding: 5px;
+            border-radius: 4px;
+            margin-right: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .chat-input button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .chat-input button:hover {
+            background-color: #3e8e41;
+        }
+
+        button {
+            width: 100px;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Chat Page</h1>
-
-        <!-- Chat List Section -->
-        <h2>Chat List</h2>
-        <div id="chat-list"></div>
-
-        <!-- Chat History Section -->
-        <h2>Chat History</h2>
-        <div id="chat-history" class="accordion"></div>
+        <div class="header">
+            <div class="dropdown">
+                <span>User</span>
+                <div class="dropdown-content" id="dropdown-content">
+                </div>
+            </div>
+        </div>
+        <div class="chat-body">
+        </div>
+        <div class="chat-input">
+            <input type="text" placeholder="Type your message here">
+            <button>Send</button>
+        </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
-    <script src="./js/chat.js"></script>
+    <script>
+        let currentUsername = '';
+        const userStr = localStorage.getItem('user');
+        if (userStr) {
+            const userObj = JSON.parse(userStr);
+            currentUsername = userObj.username;
+        } else {
+            currentUsername = "Saman";
+        }
+        const dropdownContent = document.getElementById("dropdown-content");
+        const dropdown = document.querySelector(".dropdown");
+        const input = document.querySelector('.chat-input input');
+        const sendButton = document.querySelector('.chat-input button');
+        fetch("http://localhost:3000/users/all")
+            .then(response => response.json()) // Parse the response as JSON
+            .then(users => {
+                users.forEach(user => {
+                    if (user.username === currentUsername) {
+                        return;
+                    }
+                    const button = document.createElement("button");
+                    button.textContent = user.username + "(" + user.role + ")";
+                    dropdownContent.appendChild(button);
+
+                    button.addEventListener('click', () => {
+                        dropdown.querySelector('span').textContent = user.username;
+                        const body = {
+                            currentUsername: currentUsername,
+                            otherUsername: user.username
+                        };
+
+                        fetch("http://localhost:3000/messages/senderReceiverChats", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(body)
+                        })
+                            .then(response => response.json())
+                            .then(chatMessages => {
+                                const chatBody = document.querySelector('.chat-body');
+                                chatBody.innerHTML = '';
+                                chatMessages.forEach(chatMessage => {
+                                    const chatMessageElement = document.createElement('div');
+                                    chatMessageElement.classList.add('chat-message');
+
+                                    const messageElement = document.createElement('div');
+                                    messageElement.classList.add('message');
+
+                                    const textElement = document.createElement('p');
+                                    textElement.textContent = chatMessage.text;
+                                    const meElement = document.createElement('p');
+                                    meElement.style.paddingRight = '10px';
+                                    if (chatMessage.senderUsername === currentUsername) {
+                                        meElement.textContent = 'Me :';
+                                        chatMessageElement.appendChild(meElement);
+                                    } else {
+                                        meElement.textContent = user.username + " :";
+                                        chatMessageElement.appendChild(meElement);
+                                    }
+
+                                    messageElement.appendChild(textElement);
+                                    chatMessageElement.appendChild(messageElement);
+
+                                    chatBody.appendChild(chatMessageElement);
+                                });
+                            })
+                            .catch(error => console.error(error));
+                    });
+                });
+            })
+            .catch(error => console.error(error));
+
+        sendButton.addEventListener('click', async () => {
+            const receiverUsername = dropdown.querySelector('span').textContent;
+            const text = input.value;
+
+            const body = {
+                senderUsername: currentUsername,
+                receiverUsername: receiverUsername,
+                text: text
+            };
+
+            await fetch("http://localhost:3000/messages/sendMessage", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            })
+                .catch(error => console.error(error));
+
+            input.value = '';
+
+            const buttons = dropdownContent.querySelectorAll('button');
+            buttons.forEach(button => {
+                if (button.textContent.includes(receiverUsername)) {
+                    button.click();
+                }
+            });
+
+        });
+    </script>
 </body>
 
 </html>
